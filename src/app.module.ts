@@ -7,6 +7,8 @@ import { User } from './user/entities/user.entities';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
+import { FirebaseModule } from './firebase/firebase.module';
+import { MailerModule } from './mailer/mailer.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,6 +17,8 @@ import { ConfigModule } from '@nestjs/config';
     }),
     MongooseModule.forRoot(process.env.DB_URI),
     UserModule,
+    FirebaseModule,
+    MailerModule,
     JwtModule.register({
       secret: 'liorion',
       signOptions: { expiresIn: '60s' },
