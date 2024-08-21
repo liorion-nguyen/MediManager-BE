@@ -3,7 +3,7 @@ import { IsNotEmpty, IsString, IsOptional, IsEnum, IsEmail, IsPhoneNumber, IsDat
 enum UserRole {
   PATIENT = 'Bệnh nhân',
   DOCTOR = 'Bác sĩ',
-  STAFF = 'Nhân viên',
+  RECEPTION = 'Lễ tân',
   ADMIN = 'Quản trị viên',
 }
 
