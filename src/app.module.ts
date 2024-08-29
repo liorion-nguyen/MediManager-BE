@@ -25,7 +25,12 @@ import { AuthModule } from './auth/auth.module';
     MailerModule,
     PusherModule,
     ServiceModule,
-    AuthModule
+    AuthModule,
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: '30m' },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService, PusherService],
