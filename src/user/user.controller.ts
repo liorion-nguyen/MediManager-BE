@@ -44,6 +44,7 @@ export class UserController {
     ): Promise<User> {
         return this.userService.getUser(id);
     }
+    
     @Post()
     async createUser(@Body() user: CreateUserDto): Promise<User> {
         return this.userService.createUser(user);

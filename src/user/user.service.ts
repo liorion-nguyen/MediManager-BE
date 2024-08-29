@@ -15,45 +15,45 @@ export class UserService {
         page?: number,
         show?: number,
         search?: string,
-      }, authorization: string): Promise<{ data: User[], count: number }> {
-        
+    }, authorization: string): Promise<{ data: User[], count: number }> {
+
         const limit = pageOption?.show;
         const skip = (pageOption?.page - 1) * pageOption?.show;
         const sortOptions: any = {};
         sortOptions.updatedAt = -1;
-      
+
         // Tạo một đối tượng truy vấn MongoDB
         const query: any = {};
-      
+
         if (pageOption.search) {
-          // Sử dụng biểu thức chính quy để tìm kiếm tên người dùng, tên đầy đủ và liên hệ không phân biệt hoa thường
-          const searchRegex = new RegExp(pageOption.search, 'i');
-          query.$or = [
-            { username: searchRegex },
-            { fullname: searchRegex },
-            { contact: searchRegex },
-          ];
+            // Sử dụng biểu thức chính quy để tìm kiếm tên người dùng, tên đầy đủ và liên hệ không phân biệt hoa thường
+            const searchRegex = new RegExp(pageOption.search, 'i');
+            query.$or = [
+                { username: searchRegex },
+                { fullname: searchRegex },
+                { contact: searchRegex },
+            ];
         }
-      
+
         const users = await this.userModel
-          .find(query)
-          .skip(skip)
-          .limit(limit)
-          .sort(sortOptions)
-          .exec();
-      
+            .find(query)
+            .skip(skip)
+            .limit(limit)
+            .sort(sortOptions)
+            .exec();
+
         if (!users || users.length === 0) {
-          throw new NotFoundException('No users found in the requested page.');
+            throw new NotFoundException('No users found in the requested page.');
         }
-      
+
         // Đếm tổng số lượng người dùng phù hợp với truy vấn
         const totalCount = await this.userModel.countDocuments(query);
-      
+
         return {
-          data: users,
-          count: totalCount,
+            data: users,
+            count: totalCount,
         };
-      }      
+    }
 
     async findOne(username: string): Promise<any> {
         const res = await this.userModel.findOne({
@@ -88,7 +88,7 @@ export class UserService {
 
     async getUserComment(id: string): Promise<{ fullname: string; id: string; username: string }> {
         const user = await this.userModel.findById(id, 'fullname avatar _id username').exec();
-        
+
         if (!user) {
             throw new NotFoundException('User not found.');
         }
@@ -96,7 +96,7 @@ export class UserService {
         return {
             fullname: user.fullName,
             id: user._id.toString(),
-            username: user.username, 
+            username: user.username,
         };
     }
 
@@ -118,9 +118,17 @@ export class UserService {
         });
         return res;
     }
-    
+
     async deleteUser(id: string) {
         const res = await this.userModel.findByIdAndDelete(id);
         return res;
+    }
+
+    async setCurrentRefreshToken(refreshToken: string, userId: string) {
+        await this.userModel.updateOne({ _id: userId }, { refreshToken });
+    }
+
+    async getUserById(userId: string) {
+        return this.userModel.findById(userId);
     }
 }

@@ -7,8 +7,12 @@ import { User } from './user/entities/user.entities';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
-import { FirebaseModule } from './firebase/firebase.module';
 import { MailerModule } from './mailer/mailer.module';
+import { PermissionModule } from './permission/permission.module';
+import { PusherModule } from './pusher/pusher.module';
+import { PusherService } from './pusher/pusher.service';
+import { ServiceModule } from './service/service.module';
+import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -17,14 +21,13 @@ import { MailerModule } from './mailer/mailer.module';
     }),
     MongooseModule.forRoot(process.env.DB_URI),
     UserModule,
-    FirebaseModule,
+    PermissionModule,
     MailerModule,
-    JwtModule.register({
-      secret: 'liorion',
-      signOptions: { expiresIn: '60s' },
-    }),
+    PusherModule,
+    ServiceModule,
+    AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PusherService],
 })
 export class AppModule { }
