@@ -1,18 +1,17 @@
 import { IsNotEmpty, IsString, IsOptional, IsEnum, IsEmail, IsPhoneNumber, IsDate, IsBoolean, IsUrl } from 'class-validator';
 
 enum UserRole {
-  PATIENT = 'Bệnh nhân',
-  DOCTOR = 'Bác sĩ',
-  RECEPTION = 'Lễ tân',
-  ADMIN = 'Quản trị viên',
+  PATIENT = 'Parient',
+  DOCTOR = 'Doctor',
+  RECEPTION = 'Receptionist',
+  ADMIN = 'Admin',
 }
 
 enum Gender {
-  MALE = 'Nam',
-  FEMALE = 'Nữ',
-  OTHER = 'Khác',
+  MALE = 'Male',
+  FEMALE = 'Female',
+  OTHER = 'Other',
 }
-
 export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
@@ -75,6 +74,14 @@ export class CreateUserDto {
   insuranceNumber?: string; // Số bảo hiểm y tế
 
   @IsOptional()
+  @IsString()
+  accessToken: string;
+
+  @IsOptional()
+  @IsString()
+  refreshToken: string;
+
+  @IsOptional()
   @IsDate()
   createdAt?: Date;
 
@@ -86,23 +93,23 @@ export class CreateUserDto {
 export class UpdateUserDto {
   @IsOptional()
   @IsString()
-  id?: string; 
+  id?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  username: string;
+  username?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  password: string;
+  password?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(UserRole)
-  role: UserRole;
+  role?: UserRole;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  fullName: string;
+  fullName?: string;
 
   @IsOptional()
   @IsEmail()
@@ -147,6 +154,10 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   insuranceNumber?: string;
+
+  @IsOptional()
+  @IsString()
+  refreshToken: string;
 
   @IsOptional()
   @IsDate()
