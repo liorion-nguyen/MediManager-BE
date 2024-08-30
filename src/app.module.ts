@@ -29,7 +29,7 @@ import { AuthModule } from './auth/auth.module';
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET_KEY,
-      signOptions: { expiresIn: '30m' },
+      signOptions: { expiresIn: '1m' },
     }),
   ],
   controllers: [AppController],
