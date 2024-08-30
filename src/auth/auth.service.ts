@@ -34,8 +34,8 @@ export class AuthService {
 
   async generateTokens(user: any) {
     const payload = { username: user.username, sub: user._id };
-    const accessToken = this.jwtService.sign(payload, { expiresIn: '60s' });
-    const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
+    const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
+    const refreshToken = this.jwtService.sign(payload, { expiresIn: '30d' });
 
     await this.userService.setCurrentRefreshToken(refreshToken, user._id);
 
@@ -56,7 +56,7 @@ export class AuthService {
           description: 'Invalid refresh token'
         };
       }
-      const accessToken = this.jwtService.sign({ username: user.username, sub: user._id }, { expiresIn: '60s' });
+      const accessToken = this.jwtService.sign({ username: user.username, sub: user._id }, { expiresIn: '15m' });
 
       return {
         status: 201,
