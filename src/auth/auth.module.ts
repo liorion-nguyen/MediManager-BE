@@ -5,13 +5,17 @@ import { UserModule } from 'src/user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { LocalStrategy } from './strategy/local.strategy';
+import { MailerModule } from 'src/mailer/mailer.module';
+import { VerificationCodeModule } from 'src/verificationCode/verification.module';
 
 @Module({
   imports: [
     UserModule,
-    PassportModule
+    VerificationCodeModule,
+    MailerModule, 
+    PassportModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy],
 })
-export class AuthModule{}
+export class AuthModule {}
