@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException, } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose'
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -55,9 +55,58 @@ export class UserService {
         };
     }
 
+    async findSearch(pageOption: {
+        page?: number;
+        show?: number;
+        search?: string;
+    }): Promise<{ data: User[]; count: number }> {
+        const limit = pageOption?.show || 10; // Số lượng kết quả trên mỗi trang, mặc định là 10
+        const skip = ((pageOption?.page || 1) - 1) * limit; // Số kết quả cần bỏ qua (bắt đầu từ 0)
+
+        try {
+            const searchQuery = pageOption?.search?.trim();
+
+            // Tạo điều kiện tìm kiếm nếu có searchQuery
+            const query: any = searchQuery
+                ? {
+                    $or: [
+                        { fullName: { $regex: searchQuery, $options: 'i' } },
+                        { email: { $regex: searchQuery, $options: 'i' } },
+                    ],
+                }
+                : {};
+
+            // Sử dụng Promise.all để thực hiện đồng thời tìm kiếm và đếm số lượng kết quả
+            const [users, totalCount] = await Promise.all([
+                this.userModel
+                    .find(query)
+                    .select('id fullName avatar') // Chỉ lấy các trường cần thiết
+                    .skip(skip)
+                    .limit(limit)
+                    .sort({ updatedAt: -1 }), // Sắp xếp theo trường updatedAt giảm dần
+                this.userModel.countDocuments(query), // Đếm tổng số kết quả phù hợp
+            ]);
+
+            return {
+                data: users,
+                count: totalCount,
+            };
+        } catch (error) {
+            console.error('Error:', error);
+            throw new InternalServerErrorException('Error finding users.', error.message);
+        }
+    }
+
     async findOne(username: string): Promise<any> {
         const res = await this.userModel.findOne({
             username: username
+        });
+        return res;
+    }
+
+    async findOneEmail(email: string): Promise<any> {
+        const res = await this.userModel.findOne({
+            email: email
         });
         return res;
     }
@@ -130,5 +179,19 @@ export class UserService {
 
     async getUserById(userId: string) {
         return this.userModel.findById(userId);
+    }
+
+    async updatePassword(email: string, newPassword: string): Promise<any> {
+        const user = await this.userModel.findOne({ email: email });
+        if (!user) {
+            throw new NotFoundException('User with the given email not found.');
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        user.password = hashedPassword;
+        await user.save();
+
+        return { message: 'Password updated successfully.' };
     }
 }

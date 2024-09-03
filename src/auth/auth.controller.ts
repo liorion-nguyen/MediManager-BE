@@ -10,7 +10,7 @@ import { LocalAuthGuard } from './guard/local-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+    constructor(private readonly authService: AuthService) { }
 
     @UseGuards(LocalAuthGuard)
     @Post('login')
@@ -18,7 +18,7 @@ export class AuthController {
         const user = req.user;
         if (user.isActive) {
             const tokens = await this.authService.generateTokens(user);
-            return { status: 201, data: {...tokens, user}, description: "Log in successfully." };
+            return { status: 201, data: { ...tokens, user }, description: "Log in successfully." };
         } else {
             return {
                 status: 401,
@@ -36,5 +36,10 @@ export class AuthController {
             }
         }
         return this.authService.refreshToken(refreshToken.refreshToken);
+    }
+
+    @Post('forgotpassword/email')
+    async forgotPassword(@Body('email') email: string): Promise<any> {
+        return this.authService.forgotPassword(email);
     }
 }

@@ -13,6 +13,8 @@ import { PusherModule } from './pusher/pusher.module';
 import { PusherService } from './pusher/pusher.service';
 import { ServiceModule } from './service/service.module';
 import { AuthModule } from './auth/auth.module';
+import { MessageModule } from './message/message.module';
+import { BoxChatModule } from './box-chat/box-chat.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,6 +28,8 @@ import { AuthModule } from './auth/auth.module';
     PusherModule,
     ServiceModule,
     AuthModule,
+    MessageModule,
+    BoxChatModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET_KEY,

@@ -38,6 +38,15 @@ export class UserController {
         return this.userService.getAllUser(pageOption, authorization);
     }
 
+    @Get("/search")
+    async findSearch( @Query() pageOption: {
+      page?: number,
+      show?: number,
+      search?: string,
+    }): Promise<{ data: User[], count: number }> {
+      return this.userService.findSearch(pageOption);
+    }
+
     @Get(':id')
     async getUser(
         @Param('id') id: string,
@@ -61,5 +70,10 @@ export class UserController {
         id: string,
     ) {
         return this.userService.deleteUser(id);
+    }
+
+    @Post('updatePassword')
+    async updatePassword(@Body('email') email: string, @Body('password') password: string): Promise<any> {
+        return this.userService.updatePassword(email, password);
     }
 }
