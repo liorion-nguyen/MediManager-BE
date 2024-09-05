@@ -12,7 +12,7 @@ export class MessageController {
     }
     
     @Post('/chatAi')
-    async sendChatAi(@Body() content: Message): Promise<any> {
+    async sendChatAi(@Body() content: any): Promise<any> {
         return this.messageService.sendChatAi(content);
     }
 

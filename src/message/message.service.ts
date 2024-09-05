@@ -38,6 +38,8 @@ export class MessageService {
         const dataFetch = {
             contents: content.content
         }
+        console.log(dataFetch);
+        
         
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.API_KEY_GG}`;
         const headers = {
@@ -56,6 +58,8 @@ export class MessageService {
             }
 
             const data = await response.json();
+            console.log(data);
+            
             let message = "";
             message += data.candidates[0].content.parts[0].text;
             // data.forEach((mess: any) => {

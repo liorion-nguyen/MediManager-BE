@@ -65,8 +65,6 @@ export class UserService {
 
         try {
             const searchQuery = pageOption?.search?.trim();
-
-            // Tạo điều kiện tìm kiếm nếu có searchQuery
             const query: any = searchQuery
                 ? {
                     $or: [

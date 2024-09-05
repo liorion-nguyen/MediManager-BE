@@ -8,7 +8,7 @@ export class Message extends Document {
   @Prop({ required: true })
   userId: string;
 
-  @Prop({ required: true })
+  @Prop({ default: null })
   boxId: string;
 
   @Prop({ default: null })
