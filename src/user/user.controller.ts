@@ -9,10 +9,14 @@ import {
     Query,
     BadRequestException,
     Headers,
+    Req,
+    UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entities/user.entities';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
+import { JwtAuthGuard } from 'src/guards/auth.guard';
+import { Roles } from 'src/decorators/roles.decorator';
 
 
 @Controller('users')
@@ -23,19 +27,19 @@ export class UserController {
 
 
     @Get()
+    @UseGuards( JwtAuthGuard )
+    @Roles()
     async getAllUser(
         @Query() pageOption: {
             page?: number,
             show?: number,
             search?: string,
         },
-        @Headers('authorization') authorization: string,
     ): Promise<{ data: User[], count: number }> {
-
         if (pageOption.page && pageOption.page < 1) {
             throw new BadRequestException('Invalid page number. Page number must be greater than or equal to 1.');
         }
-        return this.userService.getAllUser(pageOption, authorization);
+        return this.userService.getAllUser(pageOption);
     }
 
     @Get("/search")
