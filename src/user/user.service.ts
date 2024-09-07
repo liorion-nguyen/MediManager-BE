@@ -15,7 +15,7 @@ export class UserService {
         page?: number,
         show?: number,
         search?: string,
-    }, authorization: string): Promise<{ data: User[], count: number }> {
+    }): Promise<{ data: User[], count: number }> {
 
         const limit = pageOption?.show;
         const skip = (pageOption?.page - 1) * pageOption?.show;
