@@ -65,20 +65,26 @@ export class UserService {
 
         try {
             const searchQuery = pageOption?.search?.trim();
-            const query: any = searchQuery
-                ? {
-                    $or: [
-                        { fullName: { $regex: searchQuery, $options: 'i' } },
-                        { email: { $regex: searchQuery, $options: 'i' } },
-                    ],
+            const normalizeText = (text: string) => {
+                return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s/g, "");
+            };
+            
+            const normalizedSearchQuery = searchQuery ? normalizeText(searchQuery) : "";
+            
+            const query: any = normalizedSearchQuery
+              ? {
+                  $or: [
+                    { fullName: { $regex: normalizeText(searchQuery), $options: 'i' } },
+                    { username: { $regex: normalizeText(searchQuery), $options: 'i' } },
+                  ],
                 }
-                : {};
+              : {};
 
             // Sử dụng Promise.all để thực hiện đồng thời tìm kiếm và đếm số lượng kết quả
             const [users, totalCount] = await Promise.all([
                 this.userModel
                     .find(query)
-                    .select('id fullName avatar') // Chỉ lấy các trường cần thiết
+                    .select('id fullName profileImage') // Chỉ lấy các trường cần thiết
                     .skip(skip)
                     .limit(limit)
                     .sort({ updatedAt: -1 }), // Sắp xếp theo trường updatedAt giảm dần
@@ -100,6 +106,37 @@ export class UserService {
             username: username
         });
         return res;
+    }
+
+    async findCCCD(id: string): Promise<any> {
+        const res = await this.userModel.findOne({
+            cccdNumber: id
+        });
+        if (res) {
+            return {
+                status: 200,
+                data: res
+            }
+        } else {
+            return {
+                status: 404,
+                description: 'Can not be found.'
+            }
+        }
+    }
+
+    async findProfileImage(id: string): Promise<any> {
+        const res = await this.userModel.findOne({
+            _id: id
+        });
+        if (res) {
+            return res.profileImage
+        } else {
+            return {
+                status: 404,
+                description: 'Can not be found.'
+            }
+        }
     }
 
     async findOneEmail(email: string): Promise<any> {
@@ -153,9 +190,19 @@ export class UserService {
             10,
         );
         user.password = hash;
-        const res = this.userModel.create(user);
-
-        return res;
+        const res = await this.userModel.create(user);
+        
+        if (res) {
+            return {
+                status: 200,
+                data: res
+            }
+        } else {
+            return {
+                status: 404,
+                description: 'Can not be found.'
+            }
+        }
     }
 
     async updateUser(id: string, user: UpdateUserDto): Promise<User> {

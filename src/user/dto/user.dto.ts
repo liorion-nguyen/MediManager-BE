@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsNotEmpty, IsString, IsOptional, IsEnum, IsEmail, IsPhoneNumber, IsDate, IsBoolean, IsUrl } from 'class-validator';
 
 enum UserRole {
@@ -34,11 +35,12 @@ export class CreateUserDto {
   email?: string;
 
   @IsOptional()
-  @IsPhoneNumber()
+  @IsString()
   phoneNumber?: string;
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   dateOfBirth?: Date;
 
   @IsOptional()
@@ -58,7 +60,7 @@ export class CreateUserDto {
   isActive?: boolean;
 
   @IsOptional()
-  @IsUrl()
+  @IsString()
   profileImage?: string;
 
   @IsOptional()
@@ -83,10 +85,12 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   createdAt?: Date;
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   updatedAt?: Date;
 }
 
@@ -116,11 +120,12 @@ export class UpdateUserDto {
   email?: string;
 
   @IsOptional()
-  @IsPhoneNumber()
+  @IsString()
   phoneNumber?: string;
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   dateOfBirth?: Date;
 
   @IsOptional()
@@ -140,7 +145,7 @@ export class UpdateUserDto {
   isActive?: boolean;
 
   @IsOptional()
-  @IsUrl()
+  @IsString()
   profileImage?: string;
 
   @IsOptional()
@@ -161,9 +166,11 @@ export class UpdateUserDto {
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   createdAt?: Date;
 
   @IsOptional()
   @IsDate()
+  @Type(() => Date)
   updatedAt?: Date;
 }

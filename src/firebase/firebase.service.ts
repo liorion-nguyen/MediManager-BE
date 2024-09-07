@@ -37,7 +37,7 @@ export class FirebaseService {
       },
     });
 
-    return new Promise((resolve, reject) => {
+    new Promise((resolve, reject) => {
       stream.on('error', (error) => {
         reject(error);
       });
@@ -55,18 +55,21 @@ export class FirebaseService {
       });
       stream.end(file.buffer);
     });
+    return filename;
   } 
 
   async DeleteImage(imageUrl: string): Promise<void> {
     const storage = await this.getStorage();
     const bucket = storage.bucket();
   
-    const decodeName = decodeURIComponent(imageUrl);
-    const fileName = decodeName.split('/')[4].split('?')[0];
+    // const decodeName = decodeURIComponent(imageUrl);
+    // const fileName = decodeName.split('/')[4].split('?')[0];
+    const fileName = imageUrl;
   
     if (!fileName) {
       throw new Error('Invalid imageUrl format');
     }
+    
   
     const file = bucket.file(fileName);
     const [exists] = await file.exists();

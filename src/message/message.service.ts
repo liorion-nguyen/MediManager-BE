@@ -21,11 +21,13 @@ export class MessageService {
 
     async createMessage(content: any): Promise<any> {
         try {
-            await this.userService.getUserById(content.id); 
+            await this.userService.getUserById(content.id);
             const boxId = content.boxId;
+
             return this.messageModel.create({
                 userId: content.id,
                 boxId: boxId,
+                emoji: content.emoji || [],
                 reply: content.reply || null,
                 content: content.content
             });
@@ -38,9 +40,8 @@ export class MessageService {
         const dataFetch = {
             contents: content.content
         }
-        console.log(dataFetch);
-        
-        
+
+
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${process.env.API_KEY_GG}`;
         const headers = {
             "Content-Type": "application/json"
@@ -58,14 +59,13 @@ export class MessageService {
             }
 
             const data = await response.json();
-            console.log(data);
-            
+
             let message = "";
             message += data.candidates[0].content.parts[0].text;
             // data.forEach((mess: any) => {
             // });
             // return message;
-            
+
             message = message.replace(/gemini/gi, "LiorionAi");
             message = message.replace(/google/gi, "Liorion Nguyen");
             try {
@@ -73,7 +73,7 @@ export class MessageService {
                 let boxChat;
                 if (!boxId) {
                     const id = content.id;
-                    
+
                     const user = await this.userService.getUserById(id);
                     boxChat = await this.boxChatService.createBoxChat({
                         userId: [
@@ -119,7 +119,20 @@ export class MessageService {
             await this.boxChatService.deleteOne(boxId);
             return `Delete box chat ID: ${boxId} success`;
         } catch (error) {
-            console.error('Lỗi khi xoá boxId:', error);
+            console.error('Lỗi khi xoá box:', error);
+            throw error;
+        }
+    }
+
+    async updateMessage(id: string, message: any): Promise<any> {
+        try {
+            await this.messageModel.findByIdAndUpdate(id, message, {
+                new: true,
+                runValidators: true,
+            });
+            return message;
+        } catch (error) {
+            console.error('Lỗi khi xoá message:', error);
             throw error;
         }
     }

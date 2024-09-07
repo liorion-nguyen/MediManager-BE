@@ -46,8 +46,6 @@ export class ServiceController {
     }
     @Post()
     async createService(@Body() Service: CreateServiceDto): Promise<Service> {
-        console.log(Service);
-        
         return this.ServiceService.createService(Service);
     }
 
