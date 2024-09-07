@@ -92,4 +92,17 @@ export class BoxChatService {
             throw error;
         }
     }
+
+    async updateBoxChat(id: string, boxChat: any): Promise<any> {
+        try {
+            await this.boxChatModel.findByIdAndUpdate(id, boxChat, {
+                new: true,
+                runValidators: true,
+            });
+            return boxChat;
+        } catch (error) {
+            console.error('Lỗi khi cập nhật boxChat:', error);
+            throw error;
+        }
+    }
 }

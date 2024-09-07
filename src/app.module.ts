@@ -15,6 +15,7 @@ import { ServiceModule } from './service/service.module';
 import { AuthModule } from './auth/auth.module';
 import { MessageModule } from './message/message.module';
 import { BoxChatModule } from './box-chat/box-chat.module';
+import { FirebaseModule } from './firebase/firebase.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,6 +31,7 @@ import { BoxChatModule } from './box-chat/box-chat.module';
     AuthModule,
     MessageModule,
     BoxChatModule,
+    FirebaseModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET_KEY,

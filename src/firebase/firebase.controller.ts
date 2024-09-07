@@ -5,8 +5,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('firebase')
 export class FirebaseController {
 
-    constructor(private readonly filebaseService: FirebaseService) {
-    }
+    constructor(private readonly filebaseService: FirebaseService) {}
 
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))

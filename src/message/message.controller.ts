@@ -12,7 +12,7 @@ export class MessageController {
     }
     
     @Post('/chatAi')
-    async sendChatAi(@Body() content: Message): Promise<any> {
+    async sendChatAi(@Body() content: any): Promise<any> {
         return this.messageService.sendChatAi(content);
     }
 
@@ -24,5 +24,10 @@ export class MessageController {
     @Delete('/:id')
     async deleteBox(@Param('id') id: string): Promise<any> {
         return this.messageService.deleteBox(id);
+    }
+
+    @Put(':id')
+    async update(@Param('id') id: string, @Body() message: any): Promise<any> {
+        return this.messageService.updateMessage(id, message);
     }
 }

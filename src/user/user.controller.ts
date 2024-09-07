@@ -47,6 +47,16 @@ export class UserController {
       return this.userService.findSearch(pageOption);
     }
 
+    @Get("/cccd/:id")
+    async findCCCD(@Param('id') id: string): Promise<any> {
+      return this.userService.findCCCD(id);
+    }
+
+    @Get("/profileImage/:id")
+    async findProfileImage(@Param('id') id: string): Promise<any> {
+      return this.userService.findProfileImage(id);
+    }
+
     @Get(':id')
     async getUser(
         @Param('id') id: string,

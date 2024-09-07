@@ -23,9 +23,13 @@ export class BoxChatController {
         return this.boxChatService.getBoxIdWithUser(id1, id2);
     }
 
-
     @Post()
     async createBoxChat(@Body() content: any): Promise<any> {
         return this.boxChatService.createBoxChat(content);
+    }
+
+    @Put(':id')
+    async update(@Param('id') id: string, @Body() boxChat: any): Promise<any> {
+        return this.boxChatService.updateBoxChat(id, boxChat);
     }
 }
