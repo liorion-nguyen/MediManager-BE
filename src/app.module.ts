@@ -17,6 +17,7 @@ import { MessageModule } from './message/message.module';
 import { BoxChatModule } from './box-chat/box-chat.module';
 import { FirebaseModule } from './firebase/firebase.module';
 import { VerificationCodeModule } from './verificationCode/verification.module';
+import { JwtAuthGuard } from './guards/auth.guard';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -41,6 +42,6 @@ import { VerificationCodeModule } from './verificationCode/verification.module';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, PusherService],
+  providers: [AppService, PusherService, JwtAuthGuard],
 })
 export class AppModule { }
