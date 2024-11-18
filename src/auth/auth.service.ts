@@ -26,7 +26,6 @@ export class AuthService {
         description: 'Invalid username or password'
       }
     }
-
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return {
@@ -35,8 +34,16 @@ export class AuthService {
       }
     }
     const { password: userPassword, ...userData } = user._doc;
+    const tokens = await this.generateTokens(user);
 
-    return userData;
+    return {
+      status: 201,
+      data: {
+        ...userData,
+        ...tokens
+      },
+      description: "Log in successfully."
+    };
   }
 
   async generateTokens(user: any) {
@@ -45,7 +52,6 @@ export class AuthService {
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '30d' });
 
     await this.userService.setCurrentRefreshToken(refreshToken, user._id);
-
     return {
       accessToken,
       refreshToken,

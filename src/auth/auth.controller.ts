@@ -12,19 +12,10 @@ import { LocalAuthGuard } from './guard/local-auth.guard';
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
-    @UseGuards(LocalAuthGuard)
+    // @UseGuards(LocalAuthGuard)
     @Post('login')
-    async login(@Request() req): Promise<any> {
-        const user = req.user;
-        if (user.isActive) {
-            const tokens = await this.authService.generateTokens(user);
-            return { status: 201, data: { ...tokens, user }, description: "Log in successfully." };
-        } else {
-            return {
-                status: 401,
-                description: "Account or password is incorrect."
-            }
-        }
+    async login(@Body() body: { username: string, password: string }): Promise<any> {
+        return this.authService.validateUser(body.username, body.password);
     }
 
     @Post('refresh-token')
