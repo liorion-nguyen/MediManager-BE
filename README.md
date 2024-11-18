@@ -1,74 +1,32 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+![Logo](./public/Images/screens/Logo.png)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# MediManager
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Dự án "MediManager" là một hệ thống quản lý bệnh viện, cung cấp các chức năng quản lý bệnh nhân, bác sĩ, và các dịch vụ y tế khác.
 
-## Description
+## Mô tả dự án
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Hệ thống này được thiết kế để cung cấp một nền tảng quản lý toàn diện, cho phép người dùng quản lý quá trình chăm sóc sức khỏe một cách hiệu quả. MediManager không chỉ giúp người dùng theo dõi thông tin bệnh nhân mà còn cung cấp các công cụ giao tiếp giữa bệnh nhân và bác sĩ.
 
-## Installation
+MediManager hoạt động tốt trên cả máy tính để bàn và thiết bị di động, mang đến trải nghiệm quản lý linh hoạt cho người dùng.
 
-```bash
-$ npm install
-```
+**Các tính năng chính:**
+- Quản lý thông tin bệnh nhân và bác sĩ.
+- Quản lý lịch hẹn và dịch vụ y tế.
+- Tính năng chatbox và gửi tin nhắn giữa bệnh nhân và bác sĩ.
+- Đăng nhập bằng scan QR code.
+- Xem bản đồ.
 
-## Running the app
+## Công nghệ sử dụng:
+* [React.js](https://reactjs.org/): Thư viện JavaScript cho việc xây dựng giao diện người dùng.
+* [NestJS](https://nestjs.com/): Framework cho Node.js, giúp xây dựng ứng dụng server-side.
+* [Redux](https://redux.js.org/): Thư viện quản lý trạng thái cho ứng dụng React.
+* [MongoDB](https://www.mongodb.com/): Hệ quản trị cơ sở dữ liệu NoSQL, cho phép lưu trữ và quản lý dữ liệu một cách hiệu quả.
+* [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket): Giao thức cho phép giao tiếp hai chiều giữa client và server.
 
-```bash
-# development
-$ npm run start
+## [Figma](https://www.figma.com/design/adusr00A4EOcLhXFn58IaN/MEDDICAL---Hospital-website-template-(Community))
 
-# watch mode
-$ npm run start:dev
+## [Link Website](https://medi-manager.vercel.app/)
 
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
-# MediManager-BE
+# Demo
+[![Xem video](./public/Images/screens/previews.png)(./)](public/Images/screens/demo.mp4)
