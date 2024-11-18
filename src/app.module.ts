@@ -42,6 +42,6 @@ import { JwtAuthGuard } from './guards/auth.guard';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, PusherService, JwtAuthGuard],
+  providers: [AppService, PusherService],
 })
 export class AppModule { }
