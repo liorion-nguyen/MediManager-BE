@@ -27,8 +27,6 @@ export class UserController {
 
 
     @Get()
-    @UseGuards( JwtAuthGuard )
-    @Roles()
     async getAllUser(
         @Query() pageOption: {
             page?: number,
