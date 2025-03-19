@@ -5,14 +5,19 @@ import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(cookieParser());
   app.enableCors({
-    origin: ['https://medimanager.vercel.app/', 'http://localhost:3000' , 'http://localhost:3001', 'https://medimanager-be.vercel.app/'],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
-    allowedHeaders: 'Origin,X-Requested-With,Content-Type,Accept,Authorization',
-  });
-  app.useGlobalPipes(new ValidationPipe());
+    origin: ["https://medi-manager-be.vercel.app", "http://localhost:3000"], 
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type, Authorization",
+    credentials: true, 
+  }); 
+  app.use(cookieParser());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+    }),
+  );
 
   await app.listen(8001);
 }
